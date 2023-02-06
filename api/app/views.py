@@ -1,11 +1,11 @@
 from flask import Blueprint
-from flask import jsonify
+from .responses import response
 
 api_v1 = Blueprint('api', __name__, url_prefix='/api/v1')
 
 @api_v1.route('/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify({
+    return response({
         'msg': 'Holis, desde el listado de tareas'
     })
 
