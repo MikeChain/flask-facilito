@@ -2,6 +2,7 @@ from . import db
 
 from sqlalchemy.event import listen
 
+
 class Task(db.Model):
     __tablename__ = 'tasks'
 
@@ -23,10 +24,22 @@ class Task(db.Model):
             'deadline': self.deadline
         }
 
+    @classmethod
+    def new(cls, title, description, deadline, **kwargs):
+        return Task(title=title, description=description, deadline=deadline)
+
+    def save(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return True
+        except:
+            return False
+
 
 def insert_tasks(*args, **kwargs):
     db.session.add(
-        Task(title='Title 1', description='desc', 
+        Task(title='Title 1', description='desc',
              deadline='2023-02-06 12:00:00')
     )
     db.session.add(
