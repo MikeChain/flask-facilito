@@ -46,6 +46,29 @@ class TestApi(unittest.TestCase):
             path=new_path, content_type=self.content_type)
         self.assertEqual(response.status_code, 404)
 
+    def test_create_task(self):
+        data = {
+            "title": "nueva tarea",
+            "description": "Nueva description",
+            "deadline": "2023-02-16 12:00:00"
+        }
+
+        response = self.client.post(path=self.path, data=json.dumps(
+            data), content_type=self.content_type)
+        self.assertEqual(response.status_code, 200)
+
+        data = json.loads(response.data.decode('utf-8'))
+        t = data['data']
+        self.assertEqual(t['id'], 3)
+
+    def test_create_error(self):
+        data = {
+        }
+
+        response = self.client.post(path=self.path, data=json.dumps(
+            data), content_type=self.content_type)
+        self.assertEqual(response.status_code, 400)
+
 
 if __name__ == '__main__':
     unittest.main()
