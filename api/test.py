@@ -69,6 +69,20 @@ class TestApi(unittest.TestCase):
             data), content_type=self.content_type)
         self.assertEqual(response.status_code, 400)
 
+    def test_update_task(self):
+        new_title = "nuevo title"
+        data = {"title": new_title}
+
+        new_path = f'{self.path}/1'
+        response = self.client.put(path=new_path, data=json.dumps(
+            data), content_type=self.content_type)
+
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data.decode('utf-8'))
+        title = data['data']['title']
+
+        self.assertEqual(title, new_title)
+
 
 if __name__ == '__main__':
     unittest.main()
