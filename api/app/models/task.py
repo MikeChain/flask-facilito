@@ -24,6 +24,14 @@ class Task(db.Model):
             'deadline': self.deadline
         }
 
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False
+
     @classmethod
     def new(cls, title, description, deadline, **kwargs):
         return Task(title=title, description=description, deadline=deadline)
