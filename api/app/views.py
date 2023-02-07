@@ -7,7 +7,10 @@ api_v1 = Blueprint('api', __name__, url_prefix='/api/v1')
 
 @api_v1.route('/tasks', methods=['GET'])
 def get_tasks():
-    tasks = Task.query.all()
+    page = int(request.args.get('page', 1))
+    order = request.args.get('order', 'desc')
+
+    tasks = Task.get_by_page(page=page, per_page=5, order=order)
 
     return response(
         [task.serialize() for task in tasks]
