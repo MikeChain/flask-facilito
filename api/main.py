@@ -1,5 +1,5 @@
-from app import create_app
-from config import config
+from api.app import create_app
+from api.config import config
 
 
 env = config['development']
